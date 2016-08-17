@@ -6,15 +6,13 @@
 %global gem_version 0.34
 
 Name:          qpid-cpp
-Version:       1.35.0
+Version:       1.36.0
 Release:       SNAPSHOT%{?dist}
 Summary:       Libraries for Qpid C++ client applications
 License:       ASL 2.0
 URL:           http://qpid.apache.org
 
 Source0:       qpid-cpp-%{version}.tar.gz
-#Source1:       qpid-tools-%{version}.tar.gz
-Source1:       qpid-python-%{version}.tar.gz
 
 Patch0001:     0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
 Patch0002:     0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
@@ -46,6 +44,7 @@ BuildRequires: libdb-devel
 BuildRequires: libdb4-cxx-devel
 BuildRequires: swig
 BuildRequires: perl(ExtUtils::MakeMaker)
+BuildRequires: python-qpid >= 0.8
 
 %ifnarch s390 s390x
 BuildRequires: libibverbs-devel
@@ -263,39 +262,6 @@ Requires(postun): systemd-units
 
 
 
-%package -n python-qpid-common
-Summary: Shared code for Qpid Python language bindings
-
-%description -n python-qpid-common
-%{summary}.
-
-
-%files -n python-qpid-common
-%doc LICENSE.txt
-%doc examples
-%{python_sitelib}/mllib
-%{python_sitelib}/qpid/*.py*
-%{python_sitelib}/qpid/specs
-
-
-
-%package -n python-qpid
-Summary: Python client library for AMQP written in pure Python
-
-Requires: python-qpid-common = %{version}-%{release}
-
-%description -n python-qpid
-%{summary}.
-
-%files -n python-qpid
-%doc LICENSE.txt
-%{_bindir}/qpid-python-test
-%{python_sitelib}/qpid
-%if "%{python_version}" >= "2.6"
-%{python_sitelib}/qpid_python-*.egg-info
-%endif
-
-
 
 %package -n qpid-tools
 Summary: Management and diagostic tools for Apache Qpid
@@ -494,8 +460,6 @@ Provides:  python-qpid_messaging = %{version}-%{release}
 
 %prep
 %setup -q -n qpid-cpp-%{version}
-%setup -D -q -a 1
-#%setup -D -q -a 2
 
 %patch0001 -p2
 %patch0002 -p3
@@ -523,10 +487,6 @@ popd
 make %{?_smp_mflags}
 make docs-user-api
 
-pushd qpid-python-%{version}
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-popd
-
 %install
 mkdir -p -m0755 %{buildroot}/%{_bindir}
 mkdir -p -m0755 %{buildroot}/%{_unitdir}
@@ -535,16 +495,6 @@ pushd management/python
 %{__python} setup.py install \
     --install-purelib %{python_sitelib} \
     --root %{buildroot}
-popd
-
-pushd qpid-python-%{version}
-%{__python} setup.py install --skip-build --root $RPM_BUILD_ROOT
-
-chmod +x %{buildroot}/%{python_sitelib}/qpid/codec.py
-chmod +x %{buildroot}/%{python_sitelib}/qpid/tests/codec.py
-chmod +x %{buildroot}/%{python_sitelib}/qpid/reference.py
-chmod +x %{buildroot}/%{python_sitelib}/qpid/managementdata.py
-chmod +x %{buildroot}/%{python_sitelib}/qpid/disp.py
 popd
 
 # install examples
