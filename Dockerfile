@@ -19,10 +19,6 @@ RUN curl -o /etc/yum.repos.d/qpid-proton-testing.repo http://repo.effectivemessa
 RUN yum -y install epel-release \
         && yum -y install wget tar rpm-build rpmdevtools createrepo ncftp cmake boost-devel libuuid-devel pkgconfig gcc-c++ make ruby help2man doxygen graphviz cyrus-sasl-devel nss-devel nspr-devel xqilla-devel xerces-c-devel ruby ruby-devel swig libdb-cxx-devel libaio-devel cyrus-sasl-plain cyrus-sasl-md5 perl-ExtUtils-MakeMaker.noarch libtool python-devel python-setuptools libdb4-cxx-devel libibverbs-devel librdmacm-devel
 
-# Install Qpid Proton dependency
-RUN wget http://repo.effectivemessaging.com/qpid-proton-stable.repo -P /etc/yum.repos.d
-RUN yum -y install qpid-proton-c qpid-proton-c-devel python-qpid-proton
-
 # Create the RPMs
 RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
