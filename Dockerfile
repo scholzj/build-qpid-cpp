@@ -17,6 +17,7 @@ RUN curl -o /etc/yum.repos.d/qpid-proton-devel.repo http://repo.effectivemessagi
         && curl -o /etc/yum.repos.d/qpid-python-devel.repo http://repo.effectivemessaging.com/qpid-python-devel.repo \
         && yum -y --setopt=tsflag=nodocs install qpid-proton-c python-qpid-proton python-qpid python-qpid-common && yum clean all
 
+# Install other dependencies
 RUN yum -y install epel-release \
         && yum -y install wget tar rpm-build rpmdevtools createrepo ncftp cmake boost-devel libuuid-devel pkgconfig gcc-c++ make ruby help2man doxygen graphviz cyrus-sasl-devel nss-devel nspr-devel xqilla-devel xerces-c-devel ruby ruby-devel swig libdb-cxx-devel libaio-devel cyrus-sasl-plain cyrus-sasl-md5 perl-ExtUtils-MakeMaker.noarch libtool python-devel python-setuptools libdb4-cxx-devel libibverbs-devel librdmacm-devel
 
