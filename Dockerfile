@@ -11,9 +11,13 @@ ARG FTP_HOSTNAME
 
 # Install all dependencies
 USER root
-RUN yum -y install epel-release
-RUN yum -y install wget tar rpm-build rpmdevtools createrepo ncftp
-RUN yum -y install cmake boost-devel libuuid-devel pkgconfig gcc-c++ make ruby help2man doxygen graphviz cyrus-sasl-devel nss-devel nspr-devel xqilla-devel xerces-c-devel ruby ruby-devel swig libdb-cxx-devel libaio-devel cyrus-sasl-plain cyrus-sasl-md5 perl-ExtUtils-MakeMaker.noarch libtool python-devel python-setuptools libdb4-cxx-devel libibverbs-devel librdmacm-devel
+
+RUN curl -o /etc/yum.repos.d/qpid-proton-testing.repo http://repo.effectivemessaging.com/qpid-proton-testing.repo \
+        && curl -o /etc/yum.repos.d/qpid-python-testing.repo http://repo.effectivemessaging.com/qpid-python-testing.repo \
+        && yum -y --setopt=tsflag=nodocs install qpid-proton-c qpid-proton-c-devel python-qpid-proton python-qpid python-qpid-common && yum clean all
+
+RUN yum -y install epel-release \
+        && yum -y install wget tar rpm-build rpmdevtools createrepo ncftp cmake boost-devel libuuid-devel pkgconfig gcc-c++ make ruby help2man doxygen graphviz cyrus-sasl-devel nss-devel nspr-devel xqilla-devel xerces-c-devel ruby ruby-devel swig libdb-cxx-devel libaio-devel cyrus-sasl-plain cyrus-sasl-md5 perl-ExtUtils-MakeMaker.noarch libtool python-devel python-setuptools libdb4-cxx-devel libibverbs-devel librdmacm-devel
 
 # Install Qpid Proton dependency
 RUN wget http://repo.effectivemessaging.com/qpid-proton-stable.repo -P /etc/yum.repos.d
@@ -23,17 +27,11 @@ RUN yum -y install qpid-proton-c qpid-proton-c-devel python-qpid-proton
 RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
 
-RUN wget https://dist.apache.org/repos/dist/dev/qpid/cpp/1.35.0-alpha/qpid-cpp-1.35.0-alpha.tar.gz
-RUN tar -xf qpid-cpp-1.35.0-alpha.tar.gz
-RUN mv qpid-cpp-1.35.0-alpha/ qpid-cpp-1.35.0/
+RUN wget https://github.com/apache/qpid-cpp/archive/1.35.0-beta.tar.gz
+RUN tar -xf 1.35.0-beta.tar.gz
+RUN mv qpid-cpp-1.35.0-beta/ qpid-cpp-1.35.0/
 RUN tar -z -cf qpid-cpp-1.35.0.tar.gz qpid-cpp-1.35.0/
-RUN rm -rf master.tar.gz qpid-cpp-1.35.0/
-
-RUN wget https://dist.apache.org/repos/dist/dev/qpid/python/1.35.0-alpha/qpid-python-1.35.0-alpha.tar.gz
-RUN tar -xf qpid-python-1.35.0-alpha.tar.gz
-RUN mv qpid-python-1.35.0-alpha/ qpid-python-1.35.0/
-RUN tar -z -cf qpid-python-1.35.0.tar.gz qpid-python-1.35.0/
-RUN rm -rf master.tar.gz qpid-python-1.35.0/
+RUN rm -rf 1.35.0-beta.tar.gz qpid-cpp-1.35.0-beta/
 
 ADD ./0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch /root/rpmbuild/SOURCES/0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
 ADD ./0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch /root/rpmbuild/SOURCES/0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
