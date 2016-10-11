@@ -12,8 +12,8 @@ ARG FTP_HOSTNAME
 # Install all dependencies
 USER root
 
-RUN curl -o /etc/yum.repos.d/qpid-proton-stable.repo http://repo.effectivemessaging.com/qpid-proton-stable.repo \
-        && curl -o /etc/yum.repos.d/qpid-python-stable.repo http://repo.effectivemessaging.com/qpid-python-stable.repo \
+RUN curl -o /etc/yum.repos.d/qpid-proton-devel.repo http://repo.effectivemessaging.com/qpid-proton-devel.repo \
+        && curl -o /etc/yum.repos.d/qpid-python-devel.repo http://repo.effectivemessaging.com/qpid-python-devel.repo \
         && yum -y --setopt=tsflag=nodocs install qpid-proton-c qpid-proton-c-devel python-qpid-proton python-qpid python-qpid-common && yum clean all
 
 RUN yum -y install epel-release \
@@ -24,10 +24,10 @@ RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
 
 RUN wget https://github.com/apache/qpid-cpp/archive/1.35.0.tar.gz
-#RUN tar -xf 1.35.0-rc.tar.gz
+RUN tar -xf 1.35.0.tar.gz
 #RUN mv qpid-cpp-1.35.0-rc/ qpid-cpp-1.35.0/
-#RUN tar -z -cf qpid-cpp-1.35.0.tar.gz qpid-cpp-1.35.0/
-RUN rm -rf 1.35.0-rc.tar.gz qpid-cpp-1.35.0-rc/
+RUN tar -z -cf qpid-cpp-1.35.0.tar.gz qpid-cpp-1.35.0/
+RUN rm -rf 1.35.0.tar.gz qpid-cpp-1.35.0/
 
 ADD ./0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch /root/rpmbuild/SOURCES/0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
 ADD ./0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch /root/rpmbuild/SOURCES/0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
