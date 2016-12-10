@@ -6,7 +6,7 @@
 %global gem_version 0.34
 
 Name:          qpid-cpp
-Version:       1.36.0
+Version:       1.37.0
 Release:       SNAPSHOT%{?dist}
 Summary:       Libraries for Qpid C++ client applications
 License:       ASL 2.0
