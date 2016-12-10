@@ -7,7 +7,7 @@
 
 Name:          qpid-cpp
 Version:       1.36.0
-Release:       SNAPSHOT%{?dist}
+Release:       RC1%{?dist}
 Summary:       Libraries for Qpid C++ client applications
 License:       ASL 2.0
 URL:           http://qpid.apache.org
