@@ -13,7 +13,7 @@ ARG FTP_HOSTNAME
 USER root
 
 # Install Qpid Proton and Qpid Python dependency
-RUN curl -o /etc/yum.repos.d/qpid-proton-devel.repo http://repo.effectivemessaging.com/qpid-proton-devel.repo \
+RUN curl -o /etc/yum.repos.d/qpid-proton-testing.repo http://repo.effectivemessaging.com/qpid-proton-testing.repo \
         && curl -o /etc/yum.repos.d/qpid-python-stablerepo http://repo.effectivemessaging.com/qpid-python-stable.repo \
         && yum -y --setopt=tsflag=nodocs install qpid-proton-c qpid-proton-c-devel python-qpid-proton python-qpid python-qpid-common && yum clean all
 
