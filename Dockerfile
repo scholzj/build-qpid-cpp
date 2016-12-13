@@ -13,8 +13,8 @@ ARG FTP_HOSTNAME
 USER root
 
 # Install Qpid Proton and Qpid Python dependency
-RUN curl -o /etc/yum.repos.d/qpid-proton-testing.repo http://repo.effectivemessaging.com/qpid-proton-testing.repo \
-        && curl -o /etc/yum.repos.d/qpid-python-stablerepo http://repo.effectivemessaging.com/qpid-python-stable.repo \
+RUN curl -o /etc/yum.repos.d/qpid-proton-stable.repo http://repo.effectivemessaging.com/qpid-proton-stable.repo \
+        && curl -o /etc/yum.repos.d/qpid-python-stable.repo http://repo.effectivemessaging.com/qpid-python-stable.repo \
         && yum -y --setopt=tsflag=nodocs install qpid-proton-c qpid-proton-c-devel python-qpid-proton python-qpid python-qpid-common && yum clean all
 
 # Install other dependencies
@@ -25,11 +25,10 @@ RUN yum -y install epel-release \
 RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
 
-RUN wget https://github.com/apache/qpid-cpp/archive/1.36.0-rc1.tar.gz
+RUN wget https://github.com/apache/qpid-cpp/archive/1.36.0.tar.gz
 RUN tar -xf 1.36.0-rc1.tar.gz
-RUN mv qpid-cpp-1.36.0-rc1/ qpid-cpp-1.36.0/
 RUN tar -z -cf qpid-cpp-1.36.0.tar.gz qpid-cpp-1.36.0/
-RUN rm -rf 1.36.0-rc1.tar.gz qpid-cpp-1.36.0-rc1/
+RUN rm -rf 1.36.0.tar.gz qpid-cpp-1.36.0/
 
 ADD ./0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch /root/rpmbuild/SOURCES/0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
 ADD ./0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch /root/rpmbuild/SOURCES/0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
@@ -49,8 +48,8 @@ WORKDIR /root/repo/CentOS/7/x86_64/
 RUN createrepo .
 WORKDIR /root/repo/CentOS/7/SRPMS
 RUN createrepo .
-RUN ncftpget -u $FTP_USERNAME -p $FTP_PASSWORD -R -DD $FTP_HOSTNAME /tmp/ /web/repo/qpid-cpp-testing/
-RUN ncftpput -u $FTP_USERNAME -p $FTP_PASSWORD -R $FTP_HOSTNAME /web/repo/qpid-cpp-testing/ /root/repo/*
+RUN ncftpget -u $FTP_USERNAME -p $FTP_PASSWORD -R -DD $FTP_HOSTNAME /tmp/ /web/repo/qpid-cpp-stable/
+RUN ncftpput -u $FTP_USERNAME -p $FTP_PASSWORD -R $FTP_HOSTNAME /web/repo/qpid-cpp-stable/ /root/repo/*
 
 # Nothing to run
 CMD    /bin/bash
