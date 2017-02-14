@@ -483,6 +483,7 @@ popd
        -DBUILD_LEGACYSTORE=true \
        -DPERL_PFX_ARCHLIB=%{perl_vendorarch} \
        -DBUILD_BINDING_RUBY=false \
+       -DCMAKE_CXX_FLAGS="-std=c++11" \
        .
 make %{?_smp_mflags}
 make docs-user-api
