@@ -430,6 +430,49 @@ Provides:  perl-qpid = %{version}
 %doc LICENSE.txt
 %doc %{_perldocdir}
 
+%package -n qpid-qmf
+Summary: The QPID Management Framework
+%if 0%{?fedora}
+Requires:  qpid(cpp-client)%{?_isa}
+%endif
+Requires:  qpid-cpp-client%{?_isa} = %{version}-%{release}
+
+%description -n qpid-qmf
+The Qpid Management Framework is a general-purpose management bus built on Qpid
+messaging. It takes advantage of the scalability, security, and rich
+capabilities of Qpid to provide flexible and easy-to-use manageability to a
+large set of applications.
+
+%files -n qpid-qmf
+%{_libdir}/libqmf2.so.*
+
+%post -n qpid-qmf -p /sbin/ldconfig
+
+%postun -n qpid-qmf -p /sbin/ldconfig
+
+
+%package -n qpid-qmf-devel
+Summary:   Header files and tools for developing QMF extensions
+Requires:  qpid-qmf%{?_isa} = %{version}-%{release}
+%if 0%{?fedora}
+Requires:  qpid(cpp-client-devel)%{?_isa}
+%endif
+Requires:  qpid-cpp-client-devel%{?_isa} = %{version}-%{release}
+
+%description -n qpid-qmf-devel
+Header files and code-generation tools needed for developers of QMF-managed
+components.
+
+%files -n qpid-qmf-devel
+%{_includedir}/qmf
+%{_libdir}/libqmf2.so
+%{_bindir}/qmf-gen
+%{python_sitelib}/qmfgen
+%{_libdir}/pkgconfig/qmf2.pc
+
+%post -n qpid-qmf-devel -p /sbin/ldconfig
+
+%postun -n qpid-qmf-devel -p /sbin/ldconfig
 
 
 %package -n python-qpid-messaging
@@ -456,7 +499,25 @@ Provides:  python-qpid_messaging = %{version}-%{release}
 %{python2_sitearch}/_qpid_messaging.so
 %{_pythondocdir}/examples
 
+%package -n python-qpid-qmf
+Summary:   The QPID Management Framework bindings for python
 
+Requires:  qpid-qmf%{?_isa} = %{version}-%{release}
+Requires:  %{name}-client%{?_isa} = %{version}-%{release}
+
+%description -n python-qpid-qmf
+An extensible management framework layered on QPID messaging, bindings
+for python.
+
+%files -n python-qpid-qmf
+%{python_sitelib}/qmf
+%{python_sitearch}/qmf2.py*
+%{python_sitearch}/cqmf2.py*
+%{python_sitearch}/_cqmf2.so
+
+%post -n python-qpid-qmf -p /sbin/ldconfig
+
+%postun -n python-qpid-qmf -p /sbin/ldconfig
 
 %prep
 %setup -q -n qpid-cpp-%{version}
@@ -512,14 +573,14 @@ popd
 make install DESTDIR=%{buildroot}/
 
 # clean up items we're not installing
-rm -f  %{buildroot}/%{_bindir}/qmf*
-rm -rf %{buildroot}/%{_includedir}/qmf
+#rm -f  %{buildroot}/%{_bindir}/qmf*
+#rm -rf %{buildroot}/%{_includedir}/qmf
 rm -f  %{buildroot}/%{_libdir}/libqpidbroker.so
-rm -rf %{buildroot}/%{_libdir}/*qmf*
-rm -f  %{buildroot}/%{_libdir}/pkgconfig/qmf2.pc
-rm -rf %{buildroot}/%{python2_sitelib}/qmfgen
-rm -rf %{buildroot}/%{python2_sitearch}/*qmf*
-rm -rf %{buildroot}/%{python2_sitelib}/*qmf*
+#rm -rf %{buildroot}/%{_libdir}/*qmf*
+#rm -f  %{buildroot}/%{_libdir}/pkgconfig/qmf2.pc
+#rm -rf %{buildroot}/%{python2_sitelib}/qmfgen
+#rm -rf %{buildroot}/%{python2_sitearch}/*qmf*
+#rm -rf %{buildroot}/%{python2_sitelib}/*qmf*
 rm -rf %{buildroot}/%{python2_sitearch}/*qpid_tests*
 rm -rf %{buildroot}/%{python2_sitelib}/*qpid_tests*
 rm -rf %{buildroot}/%{_libdir}/qpid/daemon/store.so*
