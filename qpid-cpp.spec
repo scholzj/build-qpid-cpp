@@ -14,10 +14,6 @@ URL:           http://qpid.apache.org
 
 Source0:       qpid-cpp-%{version}.tar.gz
 
-Patch0001:     0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
-Patch0002:     0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
-Patch0003:     0003-NO-JIRA-Allow-overriding-the-Ruby-install-location.patch
-
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: boost-devel
@@ -522,10 +518,6 @@ for python.
 %prep
 %setup -q -n qpid-cpp-%{version}
 
-%patch0001 -p2
-%patch0002 -p3
-%patch0003 -p3
-
 pushd management/python
 # create the file since it's not included in the source tarball
 #touch src/py/qlslibs/__init__.py
@@ -588,9 +580,9 @@ rm -rf %{buildroot}/%{_initrddir}/qpidd-primary
 
 # install systemd files
 mkdir -p %{buildroot}/%{_unitdir}
-install -pm 644 %{_builddir}/qpid-cpp-%{version}/cpp/etc/qpidd.service \
+install -pm 644 %{_builddir}/qpid-cpp-%{version}/etc/fedora/qpidd.service \
     %{buildroot}/%{_unitdir}
-install -pm 644 %{_builddir}/qpid-cpp-%{version}/cpp/etc/qpidd-primary.service \
+install -pm 644 %{_builddir}/qpid-cpp-%{version}/etc/fedora/qpidd-primary.service \
     %{buildroot}/%{_unitdir}
 rm -f %{buildroot}/%{_initrddir}/qpidd
 rm -f %{buildroot}/%{_sysconfdir}/init.d/qpidd.service

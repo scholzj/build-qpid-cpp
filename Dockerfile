@@ -31,9 +31,6 @@ RUN mv qpid-cpp-master/ qpid-cpp-1.37.0/
 RUN tar -z -cf qpid-cpp-1.37.0.tar.gz qpid-cpp-1.37.0/
 RUN rm -rf master.tar.gz qpid-cpp-1.37.0/
 
-ADD ./0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch /root/rpmbuild/SOURCES/0001-NO-JIRA-qpidd.service-file-for-use-on-Fedora.patch
-ADD ./0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch /root/rpmbuild/SOURCES/0002-NO-JIRA-Allow-overriding-the-Perl-install-location.patch
-ADD ./0003-NO-JIRA-Allow-overriding-the-Ruby-install-location.patch /root/rpmbuild/SOURCES/0003-NO-JIRA-Allow-overriding-the-Ruby-install-location.patch
 ADD ./qpid-cpp.spec /root/rpmbuild/SPECS/qpid-cpp.spec
 
 WORKDIR /root/rpmbuild/SPECS
