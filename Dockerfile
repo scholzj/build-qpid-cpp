@@ -27,9 +27,9 @@ WORKDIR /root/rpmbuild/SOURCES
 
 RUN wget https://github.com/apache/qpid-cpp/archive/master.tar.gz
 RUN tar -xf master.tar.gz
-RUN mv qpid-cpp-master/ qpid-cpp-1.37.0/
-RUN tar -z -cf qpid-cpp-1.37.0.tar.gz qpid-cpp-1.37.0/
-RUN rm -rf master.tar.gz qpid-cpp-1.37.0/
+RUN mv qpid-cpp-master/ qpid-cpp-1.38.0/
+RUN tar -z -cf qpid-cpp-1.38.0.tar.gz qpid-cpp-1.38.0/
+RUN rm -rf master.tar.gz qpid-cpp-1.38.0/
 
 ADD ./qpid-cpp.spec /root/rpmbuild/SPECS/qpid-cpp.spec
 
