@@ -577,6 +577,7 @@ rm -rf %{buildroot}/%{python2_sitearch}/*qpid_tests*
 rm -rf %{buildroot}/%{python2_sitelib}/*qpid_tests*
 rm -rf %{buildroot}/%{_libdir}/qpid/daemon/store.so*
 rm -rf %{buildroot}/%{_initrddir}/qpidd-primary
+rm -rf %{buildroot}/%{_bindir}/*.bat
 
 # install systemd files
 mkdir -p %{buildroot}/%{_unitdir}
