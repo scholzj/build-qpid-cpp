@@ -25,11 +25,8 @@ RUN yum -y install wget tar rpm-build rpmdevtools createrepo ncftp cmake boost-d
 RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
 
-RUN wget https://github.com/apache/qpid-cpp/archive/1.37.0-rc1.tar.gz
-RUN tar -xf 1.37.0-rc1.tar.gz
-RUN mv qpid-cpp-1.37.0-rc1/ qpid-cpp-1.37.0/
-RUN tar -z -cf qpid-cpp-1.37.0.tar.gz qpid-cpp-1.37.0/
-RUN rm -rf 1.37.0-rc1.tar.gz qpid-cpp-1.37.0/
+RUN wget https://github.com/apache/qpid-cpp/archive/1.37.0.tar.gz
+RUN mv 1.37.0.tar.gz qpid-cpp-1.37.0.tar.gz
 
 ADD ./qpid-cpp.spec /root/rpmbuild/SPECS/qpid-cpp.spec
 
@@ -46,8 +43,8 @@ WORKDIR /root/repo/CentOS/7/x86_64/
 RUN createrepo .
 WORKDIR /root/repo/CentOS/7/SRPMS
 RUN createrepo .
-RUN ncftpget -u $FTP_USERNAME -p $FTP_PASSWORD -R -DD $FTP_HOSTNAME /tmp/ /web/repo/qpid-cpp-testing/
-RUN ncftpput -u $FTP_USERNAME -p $FTP_PASSWORD -R $FTP_HOSTNAME /web/repo/qpid-cpp-testing/ /root/repo/*
+RUN ncftpget -u $FTP_USERNAME -p $FTP_PASSWORD -R -DD $FTP_HOSTNAME /tmp/ /web/repo/qpid-cpp-stable/
+RUN ncftpput -u $FTP_USERNAME -p $FTP_PASSWORD -R $FTP_HOSTNAME /web/repo/qpid-cpp-stable/ /root/repo/*
 
 # Nothing to run
 CMD    /bin/bash
