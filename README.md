@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/scholzj/build-qpid-cpp.svg?branch=master)](https://travis-ci.org/scholzj/build-qpid-cpp)
+[![CircleCI](https://circleci.com/gh/scholzj/build-qpid-cpp.svg?style=shield)](https://circleci.com/gh/scholzj/build-qpid-cpp)
 
 # Apache Qpid C++ broker build pipeline
 
