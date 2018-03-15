@@ -507,9 +507,6 @@ for python.
 
 %files -n python-qpid-qmf
 %{python_sitelib}/qmf
-%{python_sitearch}/qmf2.py*
-%{python_sitearch}/cqmf2.py*
-%{python_sitearch}/_cqmf2.so
 
 %post -n python-qpid-qmf -p /sbin/ldconfig
 
