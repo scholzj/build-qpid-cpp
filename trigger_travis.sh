@@ -1,4 +1,4 @@
-#!/bin/ba
+#!/bin/sh
 #
 # First argument: Autntication toke for Travic-CI
 # Second argument: GitHub organization / user
