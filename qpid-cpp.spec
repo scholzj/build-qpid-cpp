@@ -150,7 +150,9 @@ in C++ using Qpid.  Qpid implements the AMQP messaging specification.
 %{_bindir}/qpid-send
 %{_bindir}/qpid-receive
 %{_libexecdir}/qpid/tests
+%defattr(755,root,root,-)
 %{_libdir}/cmake/Qpid
+%defattr(755,root,root,-)
 
 %post client-devel -p /sbin/ldconfig
 
@@ -278,6 +280,8 @@ Management and diagnostic tools for Apache Qpid brokers and clients.
 %{_bindir}/qpid-tool
 %{_bindir}/qpid-receive
 %{_bindir}/qpid-send
+%{_mandir}/man1/qpid-*.1.gz
+%{_mandir}/man1/qmf-gen.1.gz
 %{python_sitelib}/qpidtoollibs
 %doc LICENSE.txt NOTICE.txt
 %if "%{python_version}" >= "2.6"
