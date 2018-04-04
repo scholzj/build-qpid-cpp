@@ -7,7 +7,7 @@
 
 Name:          qpid-cpp
 Version:       1.38.0
-Release:       RC1%{?dist}
+Release:       0%{?dist}
 Summary:       Libraries for Qpid C++ client applications
 License:       ASL 2.0
 URL:           http://qpid.apache.org
