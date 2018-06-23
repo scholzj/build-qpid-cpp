@@ -366,32 +366,6 @@ messages.
 %postun server-xml -p /sbin/ldconfig
 
 
-
-%package server-store
-Summary:   Red Hat persistence extension to the Qpid messaging system
-
-# TODO - server-store to become linearstore with 0.34
-Requires:  qpid(server)%{?_isa} = %{version}-%{release}
-
-Provides:  qpid(cpp-server-store)%{?_isa} = %{version}-%{release}
-Requires:  qpid(cpp-server)%{?_isa} = %{version}-%{release}
-Requires:  db4
-Requires:  libaio
-
-%description server-store
-Red Hat persistence extension to the Qpid AMQP broker: persistent message
-storage using either a libaio-based asynchronous journal, or synchronously
-with Berkeley DB.
-
-%files server-store
-%{_libdir}/qpid/daemon/legacystore.so
-
-%post server-store -p /sbin/ldconfig
-
-%postun server-store -p /sbin/ldconfig
-
-
-
 %package server-linearstore
 Summary: Red Hat persistence extension to the Qpid messaging sytem
 
@@ -534,7 +508,6 @@ popd
 %build
 %cmake -DDOC_INSTALL_DIR:PATH=%{_pkgdocdir} \
        -DBUILD_LINEARSTORE=true \
-       -DBUILD_LEGACYSTORE=true \
        -DPERL_PFX_ARCHLIB=%{perl_vendorarch} \
        -DBUILD_BINDING_RUBY=false \
        .
