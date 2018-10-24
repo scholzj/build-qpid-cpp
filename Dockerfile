@@ -17,7 +17,7 @@ RUN rpmdev-setuptree
 WORKDIR /root/rpmbuild/SOURCES
 
 RUN wget https://github.com/apache/qpid-cpp/archive/1.39.0-rc1.tar.gz
-RUN mv 1.39.0.tar.gz qpid-cpp-1.39.0.tar.gz
+RUN mv 1.39.0-rc1.tar.gz qpid-cpp-1.39.0.tar.gz
 
 ADD ./qpid-cpp.spec /root/rpmbuild/SPECS/qpid-cpp.spec
 
